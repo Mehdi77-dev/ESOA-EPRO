@@ -50,7 +50,11 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Démarrage du serveur
-app.listen(PORT, () => {
-  console.log(`Serveur démarré sur http://localhost:${PORT}`);
-});
+// Démarrage du serveur (local) ou export pour Vercel (production)
+if (process.env.NODE_ENV !== 'production' && require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Serveur démarré sur http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
