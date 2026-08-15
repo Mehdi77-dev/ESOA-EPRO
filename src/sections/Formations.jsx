@@ -103,10 +103,10 @@ const FormationsSection = () => {
   };
 
   const variants = {
-    center: { x: "0%", scale: 1, opacity: 1, zIndex: 30 },
-    right: { x: "60%", scale: 0.85, opacity: 0.4, zIndex: 20 },
-    left: { x: "-60%", scale: 0.85, opacity: 0.4, zIndex: 20 },
-    hidden: { x: "0%", scale: 0.7, opacity: 0, zIndex: 10 },
+    center: { x: "0%", scale: 1, zIndex: 30, filter: "blur(0px) brightness(1)", opacity: 1 },
+    right: { x: "70%", scale: 0.82, zIndex: 20, filter: "blur(6px) brightness(0.6)", opacity: 0.9 },
+    left: { x: "-70%", scale: 0.82, zIndex: 20, filter: "blur(6px) brightness(0.6)", opacity: 0.9 },
+    hidden: { x: "0%", scale: 0.7, zIndex: 10, filter: "blur(10px) brightness(0)", opacity: 0 },
   };
 
   return (
@@ -161,12 +161,12 @@ const FormationsSection = () => {
                 variants={variants}
                 initial={false}
                 animate={variant}
-                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
                 onClick={() => {
                   if (variant === 'right') nextSlide();
                   if (variant === 'left') prevSlide();
                 }}
-                className={`absolute w-[85%] md:w-[60%] lg:w-[45%] h-[90%] md:h-[95%] rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden bg-slate-200 ${isCenter ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'}`}
+                className={`absolute w-[85%] md:w-[60%] lg:w-[45%] h-[90%] md:h-[95%] rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden bg-slate-900 ${isCenter ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'}`}
               >
                 {/* Background Image */}
                 <img
@@ -176,11 +176,11 @@ const FormationsSection = () => {
                 />
                 
                 {/* Dark gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E40]/60 via-transparent to-transparent pointer-events-none transition-opacity duration-500"></div>
+                <div className={`absolute inset-0 bg-gradient-to-t from-[#0B1E40]/60 via-transparent to-transparent pointer-events-none transition-opacity duration-700 ${isCenter ? 'opacity-100' : 'opacity-0'}`}></div>
 
                 {/* Content Card (Visible only when centered) */}
                 <div 
-                  className={`absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 lg:bottom-10 lg:left-10 lg:right-10 bg-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 transform ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+                  className={`absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 lg:bottom-10 lg:left-10 lg:right-10 bg-white/95 backdrop-blur-md rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-700 transform ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12 pointer-events-none'}`}
                 >
                   <div className="flex items-center justify-between mb-4 sm:mb-6">
                     <span className={`text-[10px] sm:text-[11px] font-bold px-3 py-1.5 rounded-full tracking-wide uppercase ${formation.badgeColor}`}>
@@ -209,13 +209,6 @@ const FormationsSection = () => {
                     Découvrir le programme
                     <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" strokeWidth={2.5} />
                   </Link>
-                </div>
-
-                {/* Fallback Title when NOT centered (for visual hint) */}
-                <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isCenter ? 'opacity-0' : 'opacity-100'}`}>
-                  <h3 className="text-white text-2xl md:text-3xl font-extrabold text-center px-4 drop-shadow-lg">
-                    {formation.title}
-                  </h3>
                 </div>
 
               </motion.div>

@@ -129,17 +129,24 @@ const PracticalExperience = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="group bg-white border border-slate-100 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] rounded-[2rem] p-8 lg:p-10 transition-all duration-300 flex flex-col justify-center min-h-[260px] sm:min-h-[300px]"
+            className="relative group bg-gradient-to-br from-[#0B1E40] to-blue-900 shadow-[0_15px_40px_-10px_rgba(11,30,64,0.3)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-10px_rgba(11,30,64,0.4)] rounded-[2rem] p-8 lg:p-10 transition-all duration-300 flex flex-col justify-center min-h-[260px] sm:min-h-[300px] overflow-hidden"
           >
-            <div className="mb-5">
-              <span className="text-6xl sm:text-7xl font-extrabold text-orange-500">
-                70%
-              </span>
+            {/* Decorative huge text in background */}
+            <div className="absolute -right-6 -bottom-8 text-[180px] font-black text-white/[0.03] pointer-events-none leading-none select-none">
+              70
             </div>
-            <h3 className="text-[20px] font-bold text-[#0B1E40] mb-3">Une approche "Hands-on"</h3>
-            <p className="text-slate-500 leading-relaxed text-[15px]">
-              Convaincus que la formation passera toujours par la pratique, nous mettons en avant l'expérience concrète.
-            </p>
+            
+            <div className="relative z-10">
+              <div className="mb-5">
+                <span className="text-6xl sm:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-500 drop-shadow-sm">
+                  70%
+                </span>
+              </div>
+              <h3 className="text-[22px] font-bold text-white mb-3">Une approche "Hands-on"</h3>
+              <p className="text-blue-100/80 leading-relaxed text-[15px]">
+                Convaincus que la formation passera toujours par la pratique, nous mettons en avant l'expérience concrète.
+              </p>
+            </div>
           </motion.div>
 
           {/* Block 4 (Medium - 2 cols) - Réseau de partenaires */}
@@ -148,59 +155,56 @@ const PracticalExperience = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="lg:col-span-2 group bg-white border border-slate-100 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] rounded-[2rem] p-8 lg:p-10 transition-all duration-300 flex flex-col justify-center min-h-[260px] sm:min-h-[300px]"
+            className="lg:col-span-2 group bg-white border border-slate-100 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] rounded-[2rem] p-8 lg:p-10 transition-all duration-300 flex flex-col justify-center min-h-[260px] sm:min-h-[300px] overflow-hidden relative"
           >
             
             {/* Top row: icon + text */}
-            <div className="flex items-start gap-5 mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-100 text-orange-500 flex items-center justify-center shrink-0">
+            <div className="flex items-start gap-5 mb-8 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-sm">
                 <PartnersIcon />
               </div>
               <div>
-                <h3 className="text-[20px] font-bold text-[#0B1E40] mb-2">Vaste réseau de partenaires</h3>
+                <h3 className="text-[22px] font-bold text-[#0B1E40] mb-2">Vaste réseau de partenaires</h3>
                 <p className="text-slate-500 leading-relaxed text-[15px] max-w-xl">
                   Nos partenariats solides avec des cliniques, CHU, organismes et entreprises vous offrent des opportunités uniques de stages et d'insertion professionnelle.
                 </p>
               </div>
             </div>
             
-            {/* Partner Logos */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              {/* CHU */}
-              <div className="flex items-center gap-2 px-5 py-3 rounded-full bg-slate-50 border border-slate-100">
-                <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center">
-                  <span className="text-white text-[8px] font-bold">+</span>
-                </div>
-                <span className="text-[13px] font-bold text-[#0B1E40] leading-tight">CHU<br/><span className="text-[10px] font-medium text-slate-400">HÔPITAL & UNIVERSITAIRES</span></span>
-              </div>
-              {/* International Medical Center */}
-              <div className="flex items-center gap-2 px-5 py-3 rounded-full bg-slate-50 border border-slate-100">
-                <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center">
-                  <span className="text-white text-[8px] font-bold">⊕</span>
-                </div>
-                <span className="text-[12px] font-bold text-[#0B1E40] leading-tight">International<br/><span className="text-[10px] font-medium text-slate-400">Medical Center</span></span>
-              </div>
-              {/* MedTech Innovation */}
-              <div className="flex items-center gap-2 px-5 py-3 rounded-full bg-slate-50 border border-slate-100">
-                <div className="w-6 h-6 rounded-full bg-sky-500 flex items-center justify-center">
-                  <span className="text-white text-[8px] font-bold">◆</span>
-                </div>
-                <span className="text-[12px] font-bold text-[#0B1E40] leading-tight">MedTech<br/><span className="text-[10px] font-medium text-slate-400">INNOVATION</span></span>
-              </div>
-              {/* Clinique Assalam */}
-              <div className="hidden sm:flex items-center gap-2 px-5 py-3 rounded-full bg-slate-50 border border-slate-100">
-                <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
-                  <span className="text-white text-[8px] font-bold">☽</span>
-                </div>
-                <span className="text-[12px] font-bold text-[#0B1E40] leading-tight">Clinique<br/><span className="text-[10px] font-medium text-slate-400">Assalam</span></span>
-              </div>
-              {/* BioLabs */}
-              <div className="hidden sm:flex items-center gap-2 px-5 py-3 rounded-full bg-slate-50 border border-slate-100">
-                <div className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center">
-                  <span className="text-white text-[8px] font-bold">✦</span>
-                </div>
-                <span className="text-[12px] font-bold text-[#0B1E40] leading-tight">BioLabs<br/><span className="text-[10px] font-medium text-slate-400">MAROC</span></span>
-              </div>
+            {/* Infinite Marquee for Partners */}
+            <div className="relative w-full overflow-hidden flex items-center -mx-4 px-4">
+              {/* Fade edges to smooth the marquee entering/exiting */}
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+              
+              <motion.div
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ ease: "linear", duration: 25, repeat: Infinity }}
+                className="flex gap-4 w-max"
+              >
+                {[
+                  { name: "CHU", sub: "HÔPITAL & UNIVERSITAIRES", color: "bg-blue-600", symbol: "+" },
+                  { name: "International", sub: "Medical Center", color: "bg-emerald-600", symbol: "⊕" },
+                  { name: "MedTech", sub: "INNOVATION", color: "bg-sky-500", symbol: "◆" },
+                  { name: "Clinique", sub: "Assalam", color: "bg-teal-500", symbol: "☽" },
+                  { name: "BioLabs", sub: "MAROC", color: "bg-violet-600", symbol: "✦" },
+                  // Duplicated array for infinite scroll
+                  { name: "CHU", sub: "HÔPITAL & UNIVERSITAIRES", color: "bg-blue-600", symbol: "+" },
+                  { name: "International", sub: "Medical Center", color: "bg-emerald-600", symbol: "⊕" },
+                  { name: "MedTech", sub: "INNOVATION", color: "bg-sky-500", symbol: "◆" },
+                  { name: "Clinique", sub: "Assalam", color: "bg-teal-500", symbol: "☽" },
+                  { name: "BioLabs", sub: "MAROC", color: "bg-violet-600", symbol: "✦" }
+                ].map((p, i) => (
+                  <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-[1.25rem] bg-white border border-slate-100 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.08)] min-w-[200px]">
+                    <div className={`w-10 h-10 rounded-xl ${p.color} flex items-center justify-center shadow-md`}>
+                      <span className="text-white text-sm font-bold">{p.symbol}</span>
+                    </div>
+                    <span className="text-[14px] font-bold text-[#0B1E40] leading-tight">
+                      {p.name}<br/><span className="text-[10px] font-medium text-slate-400">{p.sub}</span>
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
             </div>
           </motion.div>
 
