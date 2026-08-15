@@ -26,23 +26,25 @@ const ScrollToTop = () => {
 function App() {
   return (
     <RegistrationProvider>
-      <Router>
-        <ScrollToTop />
-        <FloatingSocialBar />
-        <ScrollToTopButton />
-        <RegistrationModal />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/formations" element={<Formations />} />
-          <Route path="/ecole" element={<Ecole />} />
-          <Route path="/ecole/pedagogie" element={<Pedagogie />} />
-          <Route path="/ecole/equipements" element={<Equipements />} />
-          <Route path="/ecole/vie-etudiante" element={<VieEtudiante />} />
-          <Route path="/nous-trouver" element={<NousTrouver />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/inscription" element={<Inscription />} />
-        </Routes>
-      </Router>
+      <div className="overflow-x-hidden w-full min-h-screen relative flex flex-col">
+        <Router>
+          <ScrollToTop />
+          <FloatingSocialBar />
+          <ScrollToTopButton />
+          <RegistrationModal />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/formations" element={<Formations />} />
+            <Route path="/ecole" element={<Ecole />} />
+            <Route path="/ecole/pedagogie" element={<Pedagogie />} />
+            <Route path="/ecole/equipements" element={<Equipements />} />
+            <Route path="/ecole/vie-etudiante" element={<VieEtudiante />} />
+            <Route path="/nous-trouver" element={<NousTrouver />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/inscription" element={<Inscription />} />
+          </Routes>
+        </Router>
+      </div>
     </RegistrationProvider>
   );
 }

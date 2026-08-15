@@ -296,7 +296,7 @@ const WhyChooseUs = () => {
             
             {/* Stat 1 */}
             <AnimatedFadeIn delay={0}>
-              <div className="flex items-center justify-center sm:justify-start gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
+              <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start text-center sm:text-left gap-3 sm:gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
                 <div className="w-[60px] h-[60px] rounded-full bg-[#082f82] text-white flex items-center justify-center shrink-0">
                   <GraduationCapIcon className="w-7 h-7" />
                 </div>
@@ -311,7 +311,7 @@ const WhyChooseUs = () => {
 
             {/* Stat 2 */}
             <AnimatedFadeIn delay={150}>
-              <div className="flex items-center justify-center sm:justify-start gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
+              <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start text-center sm:text-left gap-3 sm:gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
                 <div className="w-[60px] h-[60px] rounded-full bg-[#082f82] text-white flex items-center justify-center shrink-0">
                   <UsersGroupIcon className="w-7 h-7" />
                 </div>
@@ -326,7 +326,7 @@ const WhyChooseUs = () => {
 
             {/* Stat 3 */}
             <AnimatedFadeIn delay={300}>
-              <div className="flex items-center justify-center sm:justify-start gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
+              <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start text-center sm:text-left gap-3 sm:gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
                 <div className="w-[60px] h-[60px] rounded-full bg-[#082f82] text-white flex items-center justify-center shrink-0">
                   <BriefcaseIcon className="w-7 h-7" />
                 </div>
@@ -341,7 +341,7 @@ const WhyChooseUs = () => {
 
             {/* Stat 4 */}
             <AnimatedFadeIn delay={450}>
-              <div className="flex items-center justify-center sm:justify-start gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
+              <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start text-center sm:text-left gap-3 sm:gap-5 pt-6 sm:pt-0 sm:px-4 lg:px-8 h-full">
                 <div className="w-[60px] h-[60px] rounded-full bg-[#082f82] text-white flex items-center justify-center shrink-0">
                   <BadgeIcon className="w-7 h-7" />
                 </div>

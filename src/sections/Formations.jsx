@@ -68,28 +68,50 @@ const getLinkColor = (theme) => {
 
 const FormationsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [startX, setStartX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
-    // Préchargement discret des images en arrière-plan
     formations.forEach((formation) => {
       const img = new Image();
       img.src = formation.image;
     });
   }, []);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev === formations.length - 1 ? 0 : prev + 1));
+  const nextSlide = () => setCurrentIndex((prev) => (prev === formations.length - 1 ? 0 : prev + 1));
+  const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? formations.length - 1 : prev - 1));
+
+  const handlePointerDown = (clientX) => {
+    setStartX(clientX);
+    setIsDragging(true);
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? formations.length - 1 : prev - 1));
+  const handlePointerUp = (clientX) => {
+    if (!isDragging) return;
+    const distance = startX - clientX;
+    if (distance > 50) nextSlide();
+    else if (distance < -50) prevSlide();
+    setIsDragging(false);
   };
 
-  const currentFormation = formations[currentIndex];
+  const getVariant = (index) => {
+    const diff = (index - currentIndex + formations.length) % formations.length;
+    if (diff === 0) return 'center';
+    if (diff === 1) return 'right';
+    if (diff === formations.length - 1) return 'left';
+    return 'hidden';
+  };
+
+  const variants = {
+    center: { x: "0%", scale: 1, opacity: 1, zIndex: 30 },
+    right: { x: "60%", scale: 0.85, opacity: 0.4, zIndex: 20 },
+    left: { x: "-60%", scale: 0.85, opacity: 0.4, zIndex: 20 },
+    hidden: { x: "0%", scale: 0.7, opacity: 0, zIndex: 10 },
+  };
 
   return (
     <section className="relative py-10 lg:py-16 bg-slate-50/50 overflow-hidden" id="formations">
-      <div className="max-w-[1400px] mx-auto px-4 relative z-10">
+      <div className="max-w-[1400px] mx-auto relative z-10">
         
         {/* Header Section */}
         <motion.div 
@@ -97,7 +119,7 @@ const FormationsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12"
+          className="text-center max-w-3xl mx-auto px-4 mb-12 md:mb-20"
         >
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="h-px w-10 bg-orange-400"></div>
@@ -118,98 +140,97 @@ const FormationsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Carousel Container */}
-        <div className="relative max-w-[1200px] mx-auto px-12 md:px-16 mb-10">
-          
-          {/* Main Slide Area */}
-          <div className="relative w-full h-[500px] lg:h-[600px] rounded-[2.5rem] shadow-2xl overflow-hidden bg-slate-200">
+        {/* 3D Carousel Container */}
+        <div 
+          className="relative w-full h-[550px] lg:h-[650px] flex justify-center items-center overflow-hidden touch-none"
+          onTouchStart={(e) => handlePointerDown(e.touches[0].clientX)}
+          onTouchMove={(e) => isDragging && e.preventDefault()}
+          onTouchEnd={(e) => handlePointerUp(e.changedTouches[0].clientX)}
+          onMouseDown={(e) => handlePointerDown(e.clientX)}
+          onMouseMove={(e) => isDragging && e.preventDefault()}
+          onMouseUp={(e) => handlePointerUp(e.clientX)}
+          onMouseLeave={() => setIsDragging(false)}
+        >
+          {formations.map((formation, index) => {
+            const variant = getVariant(index);
+            const isCenter = variant === 'center';
             
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentIndex}
-                src={currentFormation.image}
-                alt={currentFormation.title}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </AnimatePresence>
-            
-            {/* Dark gradient overlay to ensure card readability if needed */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E40]/30 via-transparent to-transparent pointer-events-none"></div>
-
-            {/* Content Card (Bottom Left Overlapping) */}
-            <AnimatePresence mode="wait">
+            return (
               <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="absolute bottom-6 left-6 md:bottom-12 md:left-12 max-w-[90%] md:max-w-[480px] bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
+                key={formation.id}
+                variants={variants}
+                initial={false}
+                animate={variant}
+                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                onClick={() => {
+                  if (variant === 'right') nextSlide();
+                  if (variant === 'left') prevSlide();
+                }}
+                className={`absolute w-[85%] md:w-[60%] lg:w-[45%] h-[90%] md:h-[95%] rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden bg-slate-200 ${isCenter ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'}`}
               >
+                {/* Background Image */}
+                <img
+                  src={formation.image}
+                  alt={formation.title}
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                />
                 
-                {/* Top of Card: Badge & Counter */}
-                <div className="flex items-center justify-between mb-6">
-                  <span className={`text-[11px] font-bold px-3 py-1.5 rounded-full tracking-wide uppercase ${currentFormation.badgeColor}`}>
-                    {currentFormation.badge}
-                  </span>
-                  <div className="text-blue-600 font-bold text-sm tracking-widest">
-                    0{currentIndex + 1} <span className="text-slate-300 font-medium">/ 0{formations.length}</span>
+                {/* Dark gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E40]/60 via-transparent to-transparent pointer-events-none transition-opacity duration-500"></div>
+
+                {/* Content Card (Visible only when centered) */}
+                <div 
+                  className={`absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 lg:bottom-10 lg:left-10 lg:right-10 bg-white rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 transform ${isCenter ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}`}
+                >
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <span className={`text-[10px] sm:text-[11px] font-bold px-3 py-1.5 rounded-full tracking-wide uppercase ${formation.badgeColor}`}>
+                      {formation.badge}
+                    </span>
+                    <div className="text-blue-600 font-bold text-sm tracking-widest">
+                      0{index + 1} <span className="text-slate-300 font-medium">/ 0{formations.length}</span>
+                    </div>
                   </div>
+
+                  <h3 className="text-[1.5rem] sm:text-[1.8rem] md:text-[2rem] font-bold text-[#0B1E40] mb-3 sm:mb-4 leading-[1.2]">
+                    {formation.title}
+                  </h3>
+                  
+                  <div className={`h-1 w-10 mb-4 sm:mb-5 ${getLineColor(formation.themeColor)}`}></div>
+                  
+                  <p className="text-slate-500 text-[14px] sm:text-[15px] leading-relaxed mb-6 sm:mb-8 hidden sm:block">
+                    {formation.description}
+                  </p>
+                  
+                  <Link 
+                    to={formation.link} 
+                    className={`inline-flex items-center gap-2 font-bold text-[14px] sm:text-[15px] group/link ${getLinkColor(formation.themeColor)}`}
+                    onClick={(e) => !isCenter && e.preventDefault()}
+                  >
+                    Découvrir le programme
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" strokeWidth={2.5} />
+                  </Link>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-[1.8rem] md:text-[2.2rem] font-bold text-[#0B1E40] mb-4 leading-[1.2]">
-                  {currentFormation.title}
-                </h3>
-                
-                {/* Colored Line */}
-                <div className={`h-1 w-10 mb-6 ${getLineColor(currentFormation.themeColor)}`}></div>
-                
-                {/* Description */}
-                <p className="text-slate-500 text-[15px] leading-relaxed mb-8">
-                  {currentFormation.description}
-                </p>
-                
-                {/* CTA Link */}
-                <Link to={currentFormation.link} className={`inline-flex items-center gap-2 font-bold text-[15px] group/link ${getLinkColor(currentFormation.themeColor)}`}>
-                  Découvrir le programme
-                  <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" strokeWidth={2.5} />
-                </Link>
+                {/* Fallback Title when NOT centered (for visual hint) */}
+                <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${isCenter ? 'opacity-0' : 'opacity-100'}`}>
+                  <h3 className="text-white text-2xl md:text-3xl font-extrabold text-center px-4 drop-shadow-lg">
+                    {formation.title}
+                  </h3>
+                </div>
 
               </motion.div>
-            </AnimatePresence>
-            
-          </div>
-
-          {/* Navigation Arrows (Outside) */}
-          <button 
-            onClick={prevSlide}
-            className="absolute left-0 lg:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-slate-100 text-slate-700 hover:text-blue-600 hover:scale-105 transition-all focus:outline-none z-20"
-          >
-            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
-          </button>
-          
-          <button 
-            onClick={nextSlide}
-            className="absolute right-0 lg:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center shadow-[0_5px_20px_rgba(0,0,0,0.1)] border border-slate-100 text-slate-700 hover:text-blue-600 hover:scale-105 transition-all focus:outline-none z-20"
-          >
-            <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
-          </button>
-          
+            );
+          })}
         </div>
 
         {/* Pagination Dots */}
-        <div className="flex items-center justify-center gap-3 mt-4">
+        <div className="flex items-center justify-center gap-3 mt-6 lg:mt-8">
           {formations.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-blue-600 w-8' : 'bg-slate-300 hover:bg-slate-400'
+              className={`h-2.5 rounded-full transition-all duration-500 ${
+                index === currentIndex ? 'bg-blue-600 w-8' : 'bg-slate-300 hover:bg-slate-400 w-2.5'
               }`}
               aria-label={`Aller à la formation ${index + 1}`}
             />
